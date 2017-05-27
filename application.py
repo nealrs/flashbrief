@@ -40,8 +40,37 @@ application.config['PROPAGATE_EXCEPTIONS'] = True
 @application.route('/')
 def index():
   # This method should return a json object of up to 3 items, matching today's date with either text/audio components.
-  res = getNews()
+  res = getNewsAlt()
   return json.dumps(res)
+
+def getNewsAlt():
+    table = Table('news', md, autoload=True)
+    con = db.connect()
+    x = con.execute( table.select().limit(3) )
+    #x = con.execute( table.select().where(table.c.tel == tel).limit(3) )
+    rows = x.fetchall()
+    con.close()
+    print rows
+
+    clist=[]
+    for r in rows:
+        print "running rows loop"
+        # do we need to mess with the date here? to match formats
+        #odate = r.News.date
+        #ndate = "sdf" #"2017-05-23T12:00:00.0Z"
+
+        clist.append({
+          "uid": str(r.News.id),
+          "updateDate": str(r.News.date),
+          "titleText": r.News.title,
+          "streamUrl": r.News.audio,
+          "mainText": r.News.text,
+          "redirectionURL": r.News.url})
+
+    news = json.dumps(clist)
+
+    print news
+    return news
 
 def getNews():
   session = Session()
