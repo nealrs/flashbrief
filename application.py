@@ -46,18 +46,12 @@ def getNews():
   # get today's date (month/day)
   #date = "sdf"
   #rows = session.query(News).filter(Comment.date==date).order_by(Comment.id.desc()).limit(3) #latest 3 stories on THIS DAY
-  #rows = session.query(News).order_by(News.id.desc()).limit(3) #just latest 3
-
-
-  for u in session.query(News).limit(3):
-    print u.__dict__
-
-
-
+  dbq = session.query(News).order_by(News.id.desc()).limit(3) #just latest 3
+  rows = dbq.statement.execute().fetchall()
   session.close()
 
   print "hi"
-  #print rows
+  print rows
   print "end hi"
 
   clist=[]
