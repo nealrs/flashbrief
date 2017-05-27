@@ -49,7 +49,7 @@ def getNews():
   #rows = session.query(News).order_by(News.id.desc()).limit(3) #just latest 3
 
 
-  for u in session.query(News).order_by(News.id.desc()).limit(3):
+  for u in session.query(News).limit(3):
     print u.__dict__
 
 
