@@ -55,7 +55,7 @@ def getNews():
 
   clist=[]
   for r in rows:
-    print "running rows loop"
+      print "running rows loop"
       # do we need to mess with the date here? to match formats
       #odate = r.News.date
       #ndate = "sdf" #"2017-05-23T12:00:00.0Z"
