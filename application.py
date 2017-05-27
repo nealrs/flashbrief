@@ -49,10 +49,13 @@ def getNews():
   rows = session.query(News).order_by(News.id.desc()).limit(3) #just latest 3
   session.close()
 
+  print "hi"
   print rows
+  print "end hi"
 
   clist=[]
   for r in rows:
+    print "running rows loop"
       # do we need to mess with the date here? to match formats
       #odate = r.News.date
       #ndate = "sdf" #"2017-05-23T12:00:00.0Z"
