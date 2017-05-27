@@ -1,0 +1,7 @@
+{
+  "name": "Alexa Flash Briefing via MySQL/Flask",
+  "description": "Flask/MySQL app for generating a dynamic Alexa Flash breifing feed",
+  "image": "heroku/python",
+  "repository": "https://github.com/nealrs/flashbrief",
+  "keywords": ["python", "flask", "mysql", "twilio", "mms", "sms" ]
+}

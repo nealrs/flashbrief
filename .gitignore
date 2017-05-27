@@ -1,0 +1,5 @@
+*.pyc
+*.env
+Archive.zip
+iron.json
+*.p12
