@@ -46,7 +46,7 @@ def getNews():
   # get today's date (month/day)
   #date = "sdf"
   #rows = session.query(News).filter(Comment.date==date).order_by(Comment.id.desc()).limit(3) #latest 3 stories on THIS DAY
-  rows = session.query(News).order_by(Comment.id.desc()).limit(3) #just latest 3
+  rows = session.query(News).order_by(News.id.desc()).limit(3) #just latest 3
   session.close()
 
   print rows
