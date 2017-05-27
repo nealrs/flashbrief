@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from flask import request, session, Flask, render_template, Response, redirect, url_for
-from flask_cors import CORS, cross_origin
 import requests
 import json
 import re
-import random
 from os import environ
 import string
 from datetime import datetime
@@ -15,16 +13,6 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.exc import CompileError
 from sqlalchemy.orm import sessionmaker, deferred
 from sqlalchemy.ext.declarative import declarative_base
-
-#from raven.contrib.f#lask import Sentry
-#import logging
-
-#####
-# simple wrapper for logging to stdout on heroku
-#def log(message):
-    #print str(message)
-    #sys.stdout.flush()
-#####
 
 ## MySQL db config ##
 dburl = environ['CLEARDB_DATABASE_URL']
@@ -46,29 +34,32 @@ class News(Base):
 application = Flask(__name__)
 application.config['PROPAGATE_EXCEPTIONS'] = True
 
-## SENTRY CONFIG ##
-#sentry = Sentry(application, dsn=environ['SENTRY_DSN'], logging=True, level=logging.ERROR)
 
 @application.route('/')
 def index():
-  #return render_template('index.html')
+  # This method should return a json object of up to 3 items, matching today's date with either text/audio components.
   res = getNews()
   return json.dumps(res)
-
-#####
 
 def getNews():
   session = Session()
   # get today's date (month/day)
   #date = "sdf"
-  rows = session.query(News).filter(Comment.date==date).order_by(Comment.id.desc()).limit(3)
+  #rows = session.query(News).filter(Comment.date==date).order_by(Comment.id.desc()).limit(3) #latest 3 stories on THIS DAY
+  rows = session.query(News).order_by(Comment.id.desc()).limit(3) #just latest 3
   session.close()
+
+  print rows
 
   clist=[]
   for r in rows:
+      # do we need to mess with the date here? to match formats
+      odate = r.News.date
+      ndate = "sdf" #"2017-05-23T12:00:00.0Z"
+
       clist.append({
         "uid": str(r.News.id),
-        "updateDate": r.News.date, # do we need to mess with the date here?
+        "updateDate": ndate,
         "titleText": r.News.title,
         "streamUrl": r.News.audio,
         "mainText": r.News.text,
@@ -77,7 +68,6 @@ def getNews():
 
   #log(news)
   print news
-
   return news
 #####
 
