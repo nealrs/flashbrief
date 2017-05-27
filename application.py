@@ -54,16 +54,17 @@ def getNews():
   clist=[]
   for r in rows:
       # do we need to mess with the date here? to match formats
-      odate = r.News.date
-      ndate = "sdf" #"2017-05-23T12:00:00.0Z"
+      #odate = r.News.date
+      #ndate = "sdf" #"2017-05-23T12:00:00.0Z"
 
       clist.append({
         "uid": str(r.News.id),
-        "updateDate": ndate,
+        "updateDate": r.News.date,
         "titleText": r.News.title,
         "streamUrl": r.News.audio,
         "mainText": r.News.text,
         "redirectionURL": r.News.url})
+
   news = json.dumps(clist)
 
   #log(news)
