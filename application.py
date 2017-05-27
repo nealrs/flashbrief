@@ -16,24 +16,18 @@ from sqlalchemy.exc import CompileError
 from sqlalchemy.orm import sessionmaker, deferred
 from sqlalchemy.ext.declarative import declarative_base
 
-from raven.contrib.flask import Sentry
-import logging
+#from raven.contrib.f#lask import Sentry
+#import logging
 
 #####
 # simple wrapper for logging to stdout on heroku
-def log(message):
-    print str(message)
+#def log(message):
+    #print str(message)
     #sys.stdout.flush()
 #####
 
 ## MySQL db config ##
-host = environ['DB_HOSTNAME']
-port = environ['DB_PORT']
-login = environ['DB_USERNAME']
-passw = environ['DB_PASSWORD']
-dbname = environ['DB_NAME']
-dburl = "mysql://"+login+":"+passw+"@"+host+":"+port+"/"+dbname
-
+dburl = environ['CLEARDB_DATABASE_URL']
 db = create_engine(dburl, convert_unicode=True, pool_recycle=280, echo=False)
 md = MetaData(bind=db)
 Session = sessionmaker(bind=db)
@@ -81,7 +75,7 @@ def getNews():
         "redirectionURL": r.News.url})
   news = json.dumps(clist)
 
-  log(news)
+  #log(news)
   print news
 
   return news
